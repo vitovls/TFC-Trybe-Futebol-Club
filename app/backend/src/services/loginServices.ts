@@ -1,4 +1,4 @@
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { generateToken, verifyToken } from '../helpers/token';
 import Users from '../database/models/Users';
 
