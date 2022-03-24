@@ -5,7 +5,7 @@ import chaiHttp = require('chai-http');
 import { app } from '../app';
 import Users from '../database/models/Users';
 
-import { reqBody } from './reqBody'
+import { reqBody } from './mocks/reqBody'
 
 const { validLogin, noEmail,
   noPassword, errorMail1,
