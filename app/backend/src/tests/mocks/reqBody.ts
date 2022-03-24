@@ -1,7 +1,7 @@
 export const reqBody = {
   validLogin: {
-    email: 'teste@teste.com',
-    password: 'abcd@1234'
+    email: 'admin@admin.com',
+    password: 'secret_admin'
   },
   noEmail: {
     password: 'abcd@1234'
