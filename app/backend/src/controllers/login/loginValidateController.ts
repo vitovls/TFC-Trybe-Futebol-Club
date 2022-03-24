@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import loginServices from '../services/loginServices';
+import loginServices from '../../services/loginServices';
 
 const loginValidateController = async (req:Request, res:Response) => {
   const { authorization } = req.headers;

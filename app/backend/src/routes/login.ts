@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import emailMiddleware from '../controllers/middlewares/emailMiddlewares';
 import passwordMiddleware from '../controllers/middlewares/passwordMiddlewares';
-import loginController from '../controllers/login';
-import loginValidateController from '../controllers/loginValidateController';
+import loginController from '../controllers/login/login';
+import loginValidateController from '../controllers/login/loginValidateController';
 
 const loginRoutes = Router();
 

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import StatusCodes from '../helpers/StatusCode';
-import loginServices from '../services/loginServices';
+import StatusCodes from '../../helpers/StatusCode';
+import loginServices from '../../services/loginServices';
 
 const loginController = async (req:Request, res:Response) => {
   const { email, password } = req.body;
