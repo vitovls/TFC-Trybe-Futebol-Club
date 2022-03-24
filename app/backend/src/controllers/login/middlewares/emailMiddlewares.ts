@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import verifyMail from '../../helpers/regexMail';
-import StatusCodes from '../../helpers/StatusCode';
+import verifyMail from '../../../helpers/regexMail';
+import StatusCodes from '../../../helpers/StatusCode';
 
 const emailMiddleware = (req:Request, res:Response, next: NextFunction) => {
   const { email } = req.body;
