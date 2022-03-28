@@ -1,2 +1,2 @@
-bcrypt
+bcryptjs
 @types/bcrypt
