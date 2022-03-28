@@ -22,12 +22,22 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
+  before(async () => {
+    sinon
+      .stub(Users, 'findOne')
+      .resolves(findOneMock as Users);
+  });
+
+  after(()=>{
+    (Users.findOne as sinon.SinonStub).restore()
+  })
+
 describe('Verificando os status de retorno da rota "/login"', () => {
   let res: Response
-  // it('Se o login for bem sucedido, retorna uma status 200', async () => {
-  //   res = await chai.request(app).post('/login').send(validLogin)
-  //   expect(res).to.have.status(StatusCodes.OK)
-  // });
+  it('Se o login for bem sucedido, retorna uma status 200', async () => {
+    res = await chai.request(app).post('/login').send(validLogin)
+    expect(res).to.have.status(StatusCodes.OK)
+  });
   it('Se o campo "email" não estiver presente na corpo da requisição, retonar um status 401', async () => {
     res = await chai.request(app).post('/login').send(noEmail)
     expect(res).to.have.status(StatusCodes.UNAUTHORIZED)
