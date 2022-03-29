@@ -7,14 +7,14 @@ import loginValidateController from '../../controllers/login/loginValidateContro
 const loginRoutes = Router();
 
 loginRoutes.post(
-  '/login',
+  '/',
   emailMiddleware,
   passwordMiddleware,
   loginController,
 );
 
 loginRoutes.get(
-  '/login/validate',
+  '/validate',
   loginValidateController,
 );
 

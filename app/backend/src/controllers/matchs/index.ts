@@ -1,9 +1,15 @@
 import { Request, Response } from 'express';
-import { getAll } from '../../services/matchs';
+import StatusCodes from '../../helpers/StatusCode';
+import { create, getAll } from '../../services/matchs';
 
 export const getMatchsAll = async (req:Request, res:Response) => {
   const listMatchs = await getAll();
-  return res.status(200).json(listMatchs);
+  return res.status(StatusCodes.OK).json(listMatchs);
 };
 
-export const getInProgress = async () => {};
+export const createMatch = async (req:Request, res:Response) => {
+  const newMatch = req.body;
+  const match = await create(newMatch);
+  console.log('create controller');
+  return res.status(StatusCodes.CREATED).json(match);
+};

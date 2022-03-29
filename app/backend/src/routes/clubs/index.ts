@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { clubsGetAll, clubsGetById } from '../../controllers/clubs';
+import clubsControler from '../../controllers/clubs';
 
 const clubsRoutes = Router();
 
-clubsRoutes.get('/clubs', clubsGetAll);
+clubsRoutes.get('/', clubsControler.clubsGetAll);
 
-clubsRoutes.get('/clubs/:id', clubsGetById);
+clubsRoutes.get('/:id', clubsControler.clubsGetById);
 
 export default clubsRoutes;

@@ -8,3 +8,11 @@ export interface User {
 export interface IUser extends User {
   id: number,
 }
+
+export interface IMatch {
+  homeTeam: number,
+  awayTeam: number,
+  homeTeamGoals: number,
+  awayTeamGoals: number,
+  inProgress: boolean
+}

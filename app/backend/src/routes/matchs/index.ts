@@ -1,8 +1,18 @@
 import { Router } from 'express';
-import { getMatchsAll } from '../../controllers/matchs';
+import validateToken from '../../controllers/matchs/middleware/token';
+import { createMatch, getMatchsAll } from '../../controllers/matchs';
+import { notFoundTeam, notDuplicateTeam } from '../../controllers/matchs/middleware/teams';
 
 const matchsRoute = Router();
 
-matchsRoute.get('/matchs', getMatchsAll);
+matchsRoute.get('/', getMatchsAll);
+
+matchsRoute.post(
+  '/',
+  validateToken,
+  notFoundTeam,
+  notDuplicateTeam,
+  createMatch,
+);
 
 export default matchsRoute;

@@ -1,3 +1,4 @@
+import { IMatch } from '../../helpers/interfaces';
 import Clubs from '../../database/models/Clubs';
 import Matchs from '../../database/models/Matchs';
 
@@ -10,4 +11,9 @@ export const getAll = async () => {
   return listMatchs;
 };
 
-export const getInProgress = () => {};
+export const create = async (obj:IMatch) => {
+  const newMatch = await Matchs
+    .create(obj);
+  console.log('create service');
+  return newMatch;
+};
