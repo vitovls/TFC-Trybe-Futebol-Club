@@ -16,3 +16,16 @@ export interface IMatch {
   awayTeamGoals: number,
   inProgress: boolean
 }
+
+export interface IStastic {
+  name: string,
+  points: number,
+  totalGames: number,
+  totalVictories: number,
+  totalDrawn: number,
+  totalLosses: number,
+  goalsFavor: number,
+  goalsOwn: number,
+  goalsBalance: number,
+  efficiency: number
+}

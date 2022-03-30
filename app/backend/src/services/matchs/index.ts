@@ -54,6 +54,12 @@ export const getAllNotInProgressMatchs = async () => Matchs
       { model: Clubs, as: 'awayClub', attributes: ['clubName'] },
     ] });
 
+export const getMatchsByHomeTeam = async (id:number) => Matchs
+  .findAll({ where: { homeTeam: id, inProgress: false } });
+
+export const getMatchsByAwayTeam = async (id:number) => Matchs
+  .findAll({ where: { awayTeam: id, inProgress: false } });
+
 export const updateMatchScoreboard = async (
   id:number,
   homeTeamGoals:number,
