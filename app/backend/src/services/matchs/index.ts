@@ -14,8 +14,20 @@ export const getAll = async () => {
 export const create = async (obj:IMatch) => {
   const newMatch = await Matchs
     .create(obj);
-  console.log('create service');
-  return newMatch;
+  const { id,
+    homeTeam,
+    homeTeamGoals,
+    awayTeam,
+    awayTeamGoals,
+    inProgress } = newMatch;
+  return {
+    id,
+    homeTeam,
+    homeTeamGoals,
+    awayTeam,
+    awayTeamGoals,
+    inProgress,
+  };
 };
 
 export const updateProgressMatch = async (id:number) => {
