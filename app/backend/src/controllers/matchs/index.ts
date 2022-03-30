@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import StatusCodes from '../../helpers/StatusCode';
-import { create, getAll } from '../../services/matchs';
+import { create, getAll, updateMatchScoreboard, updateProgressMatch } from '../../services/matchs';
 
 export const getMatchsAll = async (req:Request, res:Response) => {
   const listMatchs = await getAll();
@@ -12,4 +12,22 @@ export const createMatch = async (req:Request, res:Response) => {
   const match = await create(newMatch);
   console.log('create controller');
   return res.status(StatusCodes.CREATED).json(match);
+};
+
+export const updateMatch = async (req:Request, res: Response) => {
+  const id = Number(req.params.id);
+  const updatedMatch = await updateProgressMatch(id);
+  return res.status(StatusCodes.OK).json(updatedMatch);
+};
+
+export const updateScoreboard = async (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+  const { homeTeamGoals, awayTeamGoals } = req.body;
+
+  const updatedMatch = await updateMatchScoreboard(id, homeTeamGoals, awayTeamGoals);
+  if (updatedMatch !== 'NOT_FOUND' && updatedMatch !== 'NOT_IN_PROGRESS') {
+    return res.status(StatusCodes.OK).json(updatedMatch);
+  } if (updatedMatch === 'NOT_FOUND') {
+    return res.status(StatusCodes.NOT_FOUND).json({ message: 'Not found match' });
+  } return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Match not in progress' });
 };

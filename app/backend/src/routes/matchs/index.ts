@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import validateToken from '../../controllers/matchs/middleware/token';
-import { createMatch, getMatchsAll } from '../../controllers/matchs';
+import { createMatch, getMatchsAll, updateMatch, updateScoreboard } from '../../controllers/matchs';
 import { notFoundTeam, notDuplicateTeam } from '../../controllers/matchs/middleware/teams';
 
 const matchsRoute = Router();
@@ -14,5 +14,9 @@ matchsRoute.post(
   notDuplicateTeam,
   createMatch,
 );
+
+matchsRoute.patch('/:id/finish', updateMatch);
+
+matchsRoute.patch('/:id', updateScoreboard);
 
 export default matchsRoute;
