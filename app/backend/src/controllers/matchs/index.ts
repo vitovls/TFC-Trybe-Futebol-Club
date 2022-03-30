@@ -26,13 +26,12 @@ export const getMatchs = async (req:Request, res:Response) => {
 };
 
 export const createMatch = async (req:Request, res:Response) => {
-  const newMatch = req.body;
-  const match = await create(newMatch);
-  console.log('create controller');
+  const matchPayload = req.body;
+  const match = await create(matchPayload);
   return res.status(StatusCodes.CREATED).json(match);
 };
 
-export const updateMatch = async (req:Request, res: Response) => {
+export const finishMatch = async (req:Request, res: Response) => {
   const id = Number(req.params.id);
   const updatedMatch = await updateProgressMatch(id);
   return res.status(StatusCodes.OK).json(updatedMatch);
