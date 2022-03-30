@@ -3,7 +3,6 @@ import validateToken from '../../controllers/matchs/middleware/token';
 import { createMatch, getMatchs,
   finishMatch, updateScoreboard } from '../../controllers/matchs';
 import { notFoundTeam, notDuplicateTeam } from '../../controllers/matchs/middleware/teams';
-import fieldsValidate from '../../controllers/matchs/middleware/fields';
 
 const matchsRoute = Router();
 
@@ -11,7 +10,6 @@ matchsRoute.get('/', getMatchs);
 
 matchsRoute.post(
   '/',
-  fieldsValidate,
   validateToken,
   notDuplicateTeam,
   notFoundTeam,

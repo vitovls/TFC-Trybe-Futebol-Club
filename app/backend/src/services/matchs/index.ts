@@ -12,14 +12,14 @@ export const getAll = async () => {
 };
 
 export const create = async (obj:IMatch) => {
+  const inProgress = true;
   const newMatch = await Matchs
     .create(obj);
   const { id,
     homeTeam,
     homeTeamGoals,
     awayTeam,
-    awayTeamGoals,
-    inProgress } = newMatch;
+    awayTeamGoals } = newMatch;
   return {
     id,
     homeTeam,
