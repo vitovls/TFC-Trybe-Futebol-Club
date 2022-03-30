@@ -17,7 +17,7 @@ export const notFoundTeam = async (req:Request, res:Response, next:NextFunction)
   const getHomeTeam = await getClubsById(homeTeam);
   const getAwayTeam = await getClubsById(awayTeam);
   if (getHomeTeam === null || getAwayTeam === null) {
-    return res.status(StatusCodes.UNAUTHORIZED).json({ message });
+    return res.status(StatusCodes.NOT_FOUND).json({ message });
   }
   next();
 };
