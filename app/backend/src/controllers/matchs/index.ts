@@ -1,9 +1,23 @@
 import { Request, Response } from 'express';
+import { IMatch } from '../../helpers/interfaces';
 import StatusCodes from '../../helpers/StatusCode';
-import { create, getAll, updateMatchScoreboard, updateProgressMatch } from '../../services/matchs';
+import { create, getAll,
+  getAllNotInProgressMatchs,
+  getAllProgressMatchs, updateMatchScoreboard,
+  updateProgressMatch } from '../../services/matchs';
 
-export const getMatchsAll = async (req:Request, res:Response) => {
-  const listMatchs = await getAll();
+export const getMatchs = async (req:Request, res:Response) => {
+  const { query } = req;
+  let listMatchs: Array<IMatch>;
+  if (query !== {}) {
+    if (query) {
+      listMatchs = await getAllProgressMatchs();
+      return res.status(StatusCodes.OK).json(listMatchs);
+    }
+    listMatchs = await getAllNotInProgressMatchs();
+    return res.status(StatusCodes.OK).json(listMatchs);
+  }
+  listMatchs = await getAll();
   return res.status(StatusCodes.OK).json(listMatchs);
 };
 

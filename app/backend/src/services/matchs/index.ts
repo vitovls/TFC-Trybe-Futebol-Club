@@ -28,6 +28,20 @@ export const getInProgressMatch = async (id:number) => {
   return match;
 };
 
+export const getAllProgressMatchs = async () => Matchs
+  .findAll({ where: { inProgress: true },
+    include: [
+      { model: Clubs, as: 'homeClub', attributes: ['clubName'] },
+      { model: Clubs, as: 'awayClub', attributes: ['clubName'] },
+    ] });
+
+export const getAllNotInProgressMatchs = async () => Matchs
+  .findAll({ where: { inProgress: false },
+    include: [
+      { model: Clubs, as: 'homeClub', attributes: ['clubName'] },
+      { model: Clubs, as: 'awayClub', attributes: ['clubName'] },
+    ] });
+
 export const updateMatchScoreboard = async (
   id:number,
   homeTeamGoals:number,
