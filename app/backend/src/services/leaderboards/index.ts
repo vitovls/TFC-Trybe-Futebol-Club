@@ -1,3 +1,4 @@
+import { IStastic } from '../../helpers/interfaces';
 import { getAllClubsWithId, getClubsByName, getClubsWithId } from '../clubs';
 import { getMatchsByAwayTeam, getMatchsByHomeTeam } from '../matchs';
 
@@ -114,7 +115,7 @@ export const stasticClub = async (teamName:string) => {
       goalsBalance: await balanceGoals(teamName),
       efficiency: await countEfficiency(teamName),
     };
-  }
+  } return err;
 };
 
 export const allStatistic = async () => {
@@ -123,17 +124,12 @@ export const allStatistic = async () => {
   return Promise.all(listClubs.map((e) => stasticClub(e)));
 };
 
-// FUNÇÃO PARA RANKEAR OS TIMES
+export const compareStatistic = async () => {
+  const list = await allStatistic() as IStastic[];
 
-// export const compareStatistic = async () => {
-//   const list = await allStatistic();
-
-//   const validate = list.some((e) => e === undefined);
-//   if (!validate) {
-//     list.sort((a, b) => {
-//       if (a?.points > b?.points) return 1;
-//       if (b?.points > a?.points) return -1;
-//       return 0;
-//     });
-//   }
-// };
+  return list.sort((a, b) => {
+    if (a?.points > b?.points) return -1;
+    if (a?.points < b?.points) return 1;
+    return 0;
+  });
+};

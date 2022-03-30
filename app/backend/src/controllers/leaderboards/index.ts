@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { allStatistic } from '../../services/leaderboards';
+import { compareStatistic } from '../../services/leaderboards';
 
 const matchOfTeams = async (req:Request, res:Response) => {
-  const stastistic = await allStatistic();
+  const stastistic = await compareStatistic();
   return res.status(200).json(stastistic);
 };
 
