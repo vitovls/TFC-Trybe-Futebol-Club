@@ -13,8 +13,8 @@ matchsRoute.post(
   '/',
   fieldsValidate,
   validateToken,
-  notFoundTeam,
   notDuplicateTeam,
+  notFoundTeam,
   createMatch,
 );
 
