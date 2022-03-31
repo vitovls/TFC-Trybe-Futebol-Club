@@ -3,6 +3,6 @@ import matchOfTeams from '../../controllers/leaderboards';
 
 const leaderboardsRoutes = Router();
 
-leaderboardsRoutes.get('/home', matchOfTeams);
+leaderboardsRoutes.get('/', matchOfTeams);
 
 export default leaderboardsRoutes;

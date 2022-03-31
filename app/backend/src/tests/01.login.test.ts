@@ -22,6 +22,8 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
+describe('Verificando os status de retorno da rota "/login"', () => {
+  let res: Response
   before(async () => {
     sinon
       .stub(Users, 'findOne')
@@ -31,9 +33,6 @@ const { expect } = chai;
   after(()=>{
     (Users.findOne as sinon.SinonStub).restore()
   })
-
-describe('Verificando os status de retorno da rota "/login"', () => {
-  let res: Response
   it('Se o login for bem sucedido, retorna uma status 200', async () => {
     res = await chai.request(app).post('/login').send(validLogin)
     expect(res).to.have.status(StatusCodes.OK)
