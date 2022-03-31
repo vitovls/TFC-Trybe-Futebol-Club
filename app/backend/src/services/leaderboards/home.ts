@@ -1,6 +1,6 @@
 import { IStastic } from '../../helpers/interfaces';
 import { getAllClubsWithId, getClubsByName, getClubsWithId } from '../clubs';
-import { getMatchsByAwayTeam, getMatchsByHomeTeam } from '../matchs';
+import { getMatchsByHomeTeam } from '../matchs';
 
 const err = 'error';
 
@@ -8,14 +8,7 @@ export const getMatchsTeam = async (teamName: string) => {
   const team = await getClubsByName(teamName);
   if (team !== null) {
     const { id } = team;
-    const home = await getMatchsByHomeTeam(id);
-    const away = await getMatchsByAwayTeam(id);
-    const allMatchs = home.concat(away);
-    return {
-      home,
-      away,
-      allMatchs,
-    };
+    return getMatchsByHomeTeam(id);
   }
   return err;
 };
@@ -23,18 +16,14 @@ export const getMatchsTeam = async (teamName: string) => {
 const totalFavorGoals = async (teamName:string) => {
   const match = await getMatchsTeam(teamName);
   if (match !== err) {
-    const home = match.home.map((e) => e.homeTeamGoals).reduce((soma, i) => soma + i);
-    const away = match.away.map((e) => e.awayTeamGoals).reduce((soma, i) => soma + i);
-    return home + away;
+    return match.map((e) => e.homeTeamGoals).reduce((soma, i) => soma + i);
   } return err;
 };
 
 const totalOwnGoals = async (teamName:string) => {
   const match = await getMatchsTeam(teamName);
   if (match !== err) {
-    const home = match.home.map((e) => e.awayTeamGoals).reduce((soma, i) => soma + i);
-    const away = match.away.map((e) => e.homeTeamGoals).reduce((soma, i) => soma + i);
-    return home + away;
+    return match.map((e) => e.awayTeamGoals).reduce((soma, i) => soma + i);
   } return err;
 };
 
@@ -49,37 +38,28 @@ const balanceGoals = async (teamName:string) => {
 const countVictories = async (teamName:string) => {
   const match = await getMatchsTeam(teamName);
   if (match !== err) {
-    const victorieHome = match.home.filter((e) => e.homeTeamGoals > e.awayTeamGoals).length;
-    const victorieAway = match.away.filter((e) => e.awayTeamGoals > e.homeTeamGoals).length;
-    const victories = victorieHome + victorieAway;
-    return victories;
+    return match.filter((e) => e.homeTeamGoals > e.awayTeamGoals).length;
   } return err;
 };
 
 const countDefeats = async (teamName:string) => {
   const match = await getMatchsTeam(teamName);
   if (match !== err) {
-    const losesHome = match.home.filter((e) => e.awayTeamGoals > e.homeTeamGoals).length;
-    const losesAway = match.away.filter((e) => e.homeTeamGoals > e.awayTeamGoals).length;
-    const loses = losesHome + losesAway;
-    return loses;
+    return match.filter((e) => e.awayTeamGoals > e.homeTeamGoals).length;
   } return err;
 };
 
 const countDraws = async (teamName:string) => {
   const match = await getMatchsTeam(teamName);
   if (match !== err) {
-    const losesHome = match.home.filter((e) => e.awayTeamGoals === e.homeTeamGoals).length;
-    const losesAway = match.away.filter((e) => e.homeTeamGoals === e.awayTeamGoals).length;
-    const loses = losesHome + losesAway;
-    return loses;
+    return match.filter((e) => e.awayTeamGoals === e.homeTeamGoals).length;
   } return err;
 };
 
 const countsMatchs = async (teamName:string) => {
   const match = await getMatchsTeam(teamName);
   if (match !== err) {
-    return match.allMatchs.length;
+    return match.length;
   } return err;
 };
 
@@ -131,7 +111,7 @@ function compare(a:number, b:number) {
   } return 0;
 }
 
-export const compareStatisticGeneral = async () => {
+export const compareStatisticHome = async () => {
   const list = await allStatistic() as IStastic[];
 
   return list

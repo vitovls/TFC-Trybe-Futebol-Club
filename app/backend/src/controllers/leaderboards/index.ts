@@ -1,9 +1,20 @@
 import { Request, Response } from 'express';
-import { compareStatistic } from '../../services/leaderboards';
+import { compareStatisticAway } from '../../services/leaderboards/away';
+import { compareStatisticHome } from '../../services/leaderboards/home';
+import StatusCodes from '../../helpers/StatusCode';
+import { compareStatisticGeneral } from '../../services/leaderboards';
 
-const matchOfTeams = async (req:Request, res:Response) => {
-  const stastistic = await compareStatistic();
-  return res.status(200).json(stastistic);
+export const generalLeaderboards = async (_req:Request, res:Response) => {
+  const stastistics = await compareStatisticGeneral();
+  return res.status(StatusCodes.OK).json(stastistics);
 };
 
-export default matchOfTeams;
+export const homeLeaderboards = async (_req: Request, res: Response) => {
+  const homeStastistics = await compareStatisticHome();
+  return res.status(StatusCodes.OK).json(homeStastistics);
+};
+
+export const awayLeaderboards = async (_req: Request, res: Response) => {
+  const awayStastistics = await compareStatisticAway();
+  return res.status(StatusCodes.OK).json(awayStastistics);
+};
