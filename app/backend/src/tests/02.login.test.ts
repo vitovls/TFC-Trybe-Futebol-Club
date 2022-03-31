@@ -1,5 +1,7 @@
 import * as sinon from 'sinon';
 import * as chai from 'chai';
+// @ts-ignore
+// Solução proposta pelo Coruja. Obrigado, Coruja!!!
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
