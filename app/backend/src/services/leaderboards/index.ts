@@ -10,7 +10,7 @@ export const getMatchsTeam = async (teamName: string) => {
     const { id } = team;
     const home = await getMatchsByHomeTeam(id);
     const away = await getMatchsByAwayTeam(id);
-    const allMatchs = await home.concat(away);
+    const allMatchs = home.concat(away);
     return {
       home,
       away,
@@ -23,8 +23,8 @@ export const getMatchsTeam = async (teamName: string) => {
 const totalFavorGoals = async (teamName:string) => {
   const match = await getMatchsTeam(teamName);
   if (match !== err) {
-    const home = await match.home.map((e) => e.homeTeamGoals).reduce((soma, i) => soma + i);
-    const away = await match.away.map((e) => e.awayTeamGoals).reduce((soma, i) => soma + i);
+    const home = match.home.map((e) => e.homeTeamGoals).reduce((soma, i) => soma + i);
+    const away = match.away.map((e) => e.awayTeamGoals).reduce((soma, i) => soma + i);
     return home + away;
   } return err;
 };
@@ -32,8 +32,8 @@ const totalFavorGoals = async (teamName:string) => {
 const totalOwnGoals = async (teamName:string) => {
   const match = await getMatchsTeam(teamName);
   if (match !== err) {
-    const home = await match.home.map((e) => e.awayTeamGoals).reduce((soma, i) => soma + i);
-    const away = await match.away.map((e) => e.homeTeamGoals).reduce((soma, i) => soma + i);
+    const home = match.home.map((e) => e.awayTeamGoals).reduce((soma, i) => soma + i);
+    const away = match.away.map((e) => e.homeTeamGoals).reduce((soma, i) => soma + i);
     return home + away;
   } return err;
 };
@@ -49,8 +49,8 @@ const balanceGoals = async (teamName:string) => {
 const countVictories = async (teamName:string) => {
   const match = await getMatchsTeam(teamName);
   if (match !== err) {
-    const victorieHome = await match.home.filter((e) => e.homeTeamGoals > e.awayTeamGoals).length;
-    const victorieAway = await match.home.filter((e) => e.awayTeamGoals > e.homeTeamGoals).length;
+    const victorieHome = match.home.filter((e) => e.homeTeamGoals > e.awayTeamGoals).length;
+    const victorieAway = match.away.filter((e) => e.awayTeamGoals > e.homeTeamGoals).length;
     const victories = victorieHome + victorieAway;
     return victories;
   } return err;
@@ -59,8 +59,8 @@ const countVictories = async (teamName:string) => {
 const countDefeats = async (teamName:string) => {
   const match = await getMatchsTeam(teamName);
   if (match !== err) {
-    const losesHome = await match.home.filter((e) => e.awayTeamGoals > e.homeTeamGoals).length;
-    const losesAway = await match.home.filter((e) => e.homeTeamGoals > e.awayTeamGoals).length;
+    const losesHome = match.home.filter((e) => e.awayTeamGoals > e.homeTeamGoals).length;
+    const losesAway = match.away.filter((e) => e.homeTeamGoals > e.awayTeamGoals).length;
     const loses = losesHome + losesAway;
     return loses;
   } return err;
@@ -69,8 +69,8 @@ const countDefeats = async (teamName:string) => {
 const countDraws = async (teamName:string) => {
   const match = await getMatchsTeam(teamName);
   if (match !== err) {
-    const losesHome = await match.home.filter((e) => e.awayTeamGoals === e.homeTeamGoals).length;
-    const losesAway = await match.home.filter((e) => e.homeTeamGoals === e.awayTeamGoals).length;
+    const losesHome = match.home.filter((e) => e.awayTeamGoals === e.homeTeamGoals).length;
+    const losesAway = match.away.filter((e) => e.homeTeamGoals === e.awayTeamGoals).length;
     const loses = losesHome + losesAway;
     return loses;
   } return err;
@@ -105,10 +105,10 @@ export const stasticClub = async (teamName:string) => {
   if (team !== null) {
     return {
       name: team.clubName,
-      points: await countsPoints(teamName),
+      totalPoints: await countsPoints(teamName),
       totalGames: await countsMatchs(teamName),
       totalVictories: await countVictories(teamName),
-      totalDrawn: await countDraws(teamName),
+      totalDraws: await countDraws(teamName),
       totalLosses: await countDefeats(teamName),
       goalsFavor: await totalFavorGoals(teamName),
       goalsOwn: await totalOwnGoals(teamName),
@@ -124,12 +124,20 @@ export const allStatistic = async () => {
   return Promise.all(listClubs.map((e) => stasticClub(e)));
 };
 
+function compare(a:number, b:number) {
+  if (a !== b) {
+    if (a > b) return -1;
+    if (a < b) return 1;
+  } return 0;
+}
+
 export const compareStatistic = async () => {
   const list = await allStatistic() as IStastic[];
 
-  return list.sort((a, b) => {
-    if (a?.points > b?.points) return -1;
-    if (a?.points < b?.points) return 1;
-    return 0;
-  });
+  return list
+    .sort((a, b) => compare(a.goalsOwn, b.goalsOwn))
+    .sort((a, b) => compare(a.goalsFavor, b.goalsFavor))
+    .sort((a, b) => compare(a.goalsBalance, b.goalsBalance))
+    .sort((a, b) => compare(a.totalVictories, b.totalVictories))
+    .sort((a, b) => compare(a.totalPoints, b.totalPoints));
 };

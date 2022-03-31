@@ -19,10 +19,10 @@ export interface IMatch {
 
 export interface IStastic {
   name: string,
-  points: number,
+  totalPoints: number,
   totalGames: number,
   totalVictories: number,
-  totalDrawn: number,
+  totalDraws: number,
   totalLosses: number,
   goalsFavor: number,
   goalsOwn: number,
