@@ -8,20 +8,16 @@ import { create, getAll,
 
 export const getMatchs = async (req:Request, res:Response) => {
   const { inProgress } = req.query;
-  console.log(req.query);
   let listMatchs: Array<IMatch>;
   if (inProgress !== undefined) {
     if (inProgress === 'true') {
       listMatchs = await getAllProgressMatchs();
-      console.log('inProgressMatchs');
       return res.status(StatusCodes.OK).json(listMatchs);
     }
     listMatchs = await getAllNotInProgressMatchs();
-    console.log('notProgressMatchs');
     return res.status(StatusCodes.OK).json(listMatchs);
   }
   listMatchs = await getAll();
-  console.log('allMatchs');
   return res.status(StatusCodes.OK).json(listMatchs);
 };
 
