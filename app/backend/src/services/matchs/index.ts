@@ -31,8 +31,8 @@ export const create = async (obj:IMatch) => {
 };
 
 export const updateProgressMatch = async (id:number) => {
-  const updatedMatch = await Matchs.update({ inProgress: false }, { where: { id } });
-  return updatedMatch;
+  await Matchs.update({ inProgress: false }, { where: { id } });
+  return Matchs.findOne({ where: { id } });
 };
 
 export const getInProgressMatch = async (id:number) => {
@@ -70,7 +70,8 @@ export const updateMatchScoreboard = async (
   const NOT_IN_PROGRESS = 'NOT_IN_PROGRESS';
   if (match !== null) {
     if (match.inProgress) {
-      return Matchs.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
+      await Matchs.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
+      return Matchs.findOne({ where: { id } });
     } return NOT_IN_PROGRESS;
   } return NOT_FOUND;
 };
