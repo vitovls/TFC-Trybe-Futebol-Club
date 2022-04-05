@@ -64,3 +64,8 @@ export const findAllClubsMock = [
     clubName: "São Paulo"
   }
 ]
+
+export const findOneClubMock = {
+  id: 1,
+  clubName: "Avaí/Kindermann"
+}
