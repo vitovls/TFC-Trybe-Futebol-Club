@@ -16,7 +16,7 @@ O foco do projeto era no backend, onde foi feita uma API REST para o site.
   - Testes com chai, sinon.
 
 ### As principais habilidades desenvolvidas ao longo do projeto foi:
-  - Realizar teste unitários
+  - Realizar testes unitários
   - Realizar a dockerização dos apps, network, volume e compose;
   - Modelar dados com MySQL através do Sequelize;
   - Criar e associar tabelas usando models do sequelize;
