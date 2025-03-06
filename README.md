@@ -16,12 +16,12 @@ O foco do projeto era no backend, onde foi feita uma API REST para o site.
   - Testes com chai, sinon.
 
 ### As principais habilidades desenvolvidas ao longo do projeto foi:
-  - Realizar testes unitários
-  - Realizar a dockerização dos apps, network, volume e compose;
-  - Modelar dados com MySQL através do Sequelize;
-  - Criar e associar tabelas usando models do sequelize;
-  - Construir uma API REST com endpoints para consumir os models criados;
-  - Fazer um CRUD utilizando ORM;
+  - Escrita de testes unitários para garantir a qualidade e confiabilidade do código.
+  - Dockerização completa das aplicações, incluindo configuração de redes, volumes e orquestração com Docker Compose.
+  - Modelagem e gestão de dados no MySQL utilizando Sequelize, aplicando boas práticas de estruturação de banco de dados.
+  - Criação e associação de tabelas de forma eficiente através dos models do Sequelize.
+  - Desenvolvimento de APIs RESTful, implementando endpoints escaláveis e bem documentados.
+  - Implementação de operações CRUD otimizadas, garantindo alto desempenho e segurança na manipulação de dados.
 
 ### Instalando as dependências necessárias
 
